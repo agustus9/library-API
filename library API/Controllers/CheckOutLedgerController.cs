@@ -7,16 +7,40 @@ using System.Web.Http;
 using library_API.Models;
 using library_API.Data;
 using System.Data.Entity;
+using library_API.ViewModels;
 
 namespace library_API.Controllers
 {
-    [Route("api/CheckOutLedgerControllers")]
     public class CheckOutLedgerController : ApiController
     {
-        public IEnumerable<CheckOutLedger> GetAll()
+        [HttpPut]
+        [Route("api/book/{bookId}/checkout")]
+        public CheckoutReceiptViewModel Put([FromUri] int bookId, [FromBody] CheckoutViewModel data)
         {
-            var db = new DataContext();
-            return db.CheckOutLedger.Include(i => i.Name).ToList();
+            var dbLibrary = new DataContext();
+            var book = dbLibrary.Books.Single(i => i.ID == bookId);
+            if (!book.IsCheckedOut)
+            {
+                book.IsCheckedOut = true;
+                book.DueBackDate = DateTime.Now.AddDays(10);
+                dbLibrary.SaveChanges();
+                //TODO: add to ledger   
+
+                return new CheckoutReceiptViewModel
+                {
+                    Message = "Please try again later",
+                    DuebackDate = book.DueBackDate
+                };
+            }
+            else
+            {
+                return new CheckoutReceiptViewModel
+                {
+                    Message = "Please try again later",
+                    DuebackDate = book.DueBackDate
+                };
+            }
         }
     }
 }
+

@@ -10,13 +10,24 @@ using System.Data.Entity;
 
 namespace library_API.Controllers
 {
-    [Route("api/genres")]
     public class GenreController : ApiController
     {
-        public IEnumerable<Genre> GetAll()
+        public IEnumerable<Genre> Get()
         {
-            var db = new DataContext();
-            return db.Genres.Include(i => i.Name).ToList();
+            var dbLibraryContext = new DataContext();
+            return dbLibraryContext.Genres.ToList();
+        }
+
+        public IHttpActionResult Post(string name)
+        {
+            var newGenre = new Genre
+            {
+                DisplayName = name
+            };
+            var dbLibraryContext = new DataContext();
+            dbLibraryContext.Genres.Add(newGenre);
+            dbLibraryContext.SaveChanges();
+            return Ok(newGenre);
         }
     }
 }

@@ -11,13 +11,15 @@ using System.Data.Entity;
 
 namespace library_API.Controllers
 {
-    [Route("api/books")]
     public class BookController : ApiController
     {
-        public IEnumerable<Book> GetAll()
+        public IEnumerable<Book> Get()
         {
-            var db = new DataContext();
-            return db.Books.Include(i => i.Title).ToList();
+            var dbLibrary = new DataContext();
+            var data = dbLibrary.Books.Include(i => i.Author).Include(i => i.Genre);
+            return data.ToList();
         }
     }
 }
+
+

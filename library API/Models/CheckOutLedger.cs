@@ -8,11 +8,10 @@ namespace library_API.Models
     public class CheckOutLedger
     {
         public int ID { get; set; }
-        public string Name { get; set; }
-        public string UserEmail { get; set; }
-        public DateTime Timestamp { get; set; }
+        public DateTime TimeStamp { get; set; }
+        public string Email { get; set; }
 
-        public int BookID { get; set; }
-        public Book Books { get; set; }
+        public Book Book { get; set; }
+        public int? BookId { get; set; }
     }
 }

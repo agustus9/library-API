@@ -16,11 +16,7 @@ namespace library_API.Data
         }
 
         public DbSet<Book> Books { get; set; }
-        public DbSet<Author> CheckOutLedgers { get; set; }
-        public DbSet<CheckOutLedger> CheckOutLedger { get; set; }
+        public DbSet<Author> Authors { get; set; }
         public DbSet<Genre> Genres { get; set; }
-
-
-
     }
 }

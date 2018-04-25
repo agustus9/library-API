@@ -10,10 +10,8 @@ namespace library_API.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public DateTime Born { get; set; }
-        public DateTime Died { get; set; }
-
-        public ICollection<Book> Books { get; set; } = new HashSet<Book>();
+        public int? YearBorn { get; set; }
+        public int? YearDied { get; set; }
 
     }
 }

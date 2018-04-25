@@ -11,13 +11,25 @@ using System.Data.Entity;
 
 namespace library_API.Controllers
 {
-    [Route("api/authors")]
     public class AuthorController : ApiController
     {
-        public IEnumerable<Author> GetAll()
+        public IEnumerable<Author> Get()
         {
-            var db = new DataContext();
-            return db.CheckOutLedgers.Include(i => i.Name).ToList();
+            var dbLibraryContext = new DataContext();
+            return dbLibraryContext.Authors.ToList();
         }
+
+        public IHttpActionResult Post(string name)
+        {
+            var newAuthor = new Author
+            {
+                Name = name
+            };
+            var dbLibraryContext = new DataContext();
+            dbLibraryContext.Authors.Add(newAuthor);
+            dbLibraryContext.SaveChanges();
+            return Ok(newAuthor);
+        }
+
     }
 }
